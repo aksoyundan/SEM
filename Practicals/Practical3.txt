@@ -1,0 +1,52 @@
+################################################################
+############## Computer Practical 3 ############################
+############### Multiple Group Analysis ########################
+########################################## 06Nov2023, Ozan Aksoy
+################################################################
+A.  The intertemporal stability of income attainment 
+       (data: gss1988_1999.dat)
+################################################################
+
+In this assignment we focus on  structural invariance . We are 
+going to analyze the Blau-Duncan path model for different years, 
+and test whether the path coefficients have changed over time.  
+
+The General Social Survey is a yearly repeated US national 
+survey with a largely fixed set of questions; see, e.g., 
+http://webapp.icpsr.umich.edu/GSS/ for details. For the period 
+1988-1998 I collected the following variables in the file 
+GSS1988_1999.dat. NOTE: missing values are coded as 9999. Make 
+sure that 9999s are coded as missings when you read data in R.
+
+Survey year 1988 to 1998 (YEAR)
+Respondent s AGE;
+Respondent s SEX;
+Respondent s RACE;
+Number of brothers and sisters (SIBS) of Respondent;
+Respondent s number of years of education (EDUC);
+Number of years of education of Respondent s father (PAEDUC);
+Number of years of education of Respondent s mother (MAEDUC);
+Number of years of education of Respondent s spouse (SPEDUC);
+Respondent s occupational prestige (SEI) score;
+Respondent s income (RINCOME).
+
+Make yourself familiar with the variable values. Note that for 
+the RINCOME variable, categories of income have been used. In 
+this exercise, we'll use this variable as if it was continuous.  
+
+We study the following model: 
+
+EDUC    is affected by PAEDUC and SIBS; 
+SEI     is affected by EDUC; and 
+RINCOME is affected by EDUC and SEI.
+
+(1)	Perform a multiple group analysis, comparing the path 
+coefficients in the years 1988, 1993, and 1998. You are also free 
+to compare the other model parameters (error variances, the
+means and covariances of the exogenous variables, and the 
+intercepts for the endogenous variables). 
+
+(2)	Diff-in-Diff: test that the differences in effects  
+between 88-93 are the same as the differences between 93-98. 
+* Think about how to analyze the data for all years 1988-1998 
+in order to test linearity of effects over time. 
