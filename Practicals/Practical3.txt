@@ -50,3 +50,50 @@ intercepts for the endogenous variables).
 between 88-93 are the same as the differences between 93-98. 
 * Think about how to analyze the data for all years 1988-1998 
 in order to test linearity of effects over time. 
+
+################################################################
+B. Worries of Muslim immigrants (data: pew_worries.dat)
+################################################################
+
+We consider a subset of the dataset collected by Pew. The 
+respondents are Muslim immigrants in four European countries 
+(Britain, France, Germany, and Spain). Data from other countries 
+are omitted for this exercise. The included variables are:
+ 
+    country 	Britain=1, France=4, Germany=5, Spain=13 
+    hostility	How many Europeans do you think are hostile 
+                   towards Muslims (1/4)
+    Q26a	Worries about the decline of religion (1/4)
+    Q26b	Worries about the rights of Muslim women in the 
+                   west (1/4)
+    Q26c	Worries about the influence of Western media on 
+                   the Muslim youth (1/4)
+
+The variables hostility and Q26* contain a modest number of 
+missing values. The three items Q26* are indicators measuring 
+the  worries of immigrants about Westernization .
+
+IMPORTANT:
+Note  missing values are indicated by values: 8, 9, and 99. 
+When reading the data in make sure that those values are recoded
+as missing. Treat Q26* and hostility variables as continuous.
+You can use the scan() function to read these data in. You can
+also use any other function that you think works.
+
+Test strong measurement invariance (both loadings & intercepts) 
+of the scale across the 4 countries. You will likely conclude 
+that it is necessary to consider partial invariance. Check 
+modification indices. These modification indices suggest that 
+you should remove the constraint that one of the intercepts is 
+the same over the countries (which item?). Check for partial 
+invariance with this constraint removed. What do you conclude?
+Assuming that (partial) strong invariance applies, test 
+whether there are country differences with respect the (1) mean 
+and (2) variance of the latent variable  Worries . 
+
+One may think that Worries are caused by feelings of threatened 
+by (the hostility of) the native population. Test whether 
+hostility positively affects (the latent variable) worry, and 
+assess whether there are cross-country differences in the effect
+of hostility on worry and between the level-intercept- of worry.
+
