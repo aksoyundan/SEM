@@ -189,68 +189,27 @@ TS  =~   TSSE1 +   TSSE2
 JBS =~JBSATIS1 +JBSATIS2 
 
 #structural part
+#note: initially, we forgot to add the covariances between the 
+#exogenous variables. Below we are adding them properly.
+#That is going to improve model fit a lot.
+
 JBS      ~ AM + TS + PERFORMM + VERBINTM
-PERFORMM ~ AM + TS            + VERBINTM'
+PERFORMM ~ AM + TS            + VERBINTM
+AM ~~ VERBINTM
+TS ~~ VERBINTM
+AM ~~TS'
 
 mjob1 <- sem(mod, sample.cov = d.job, sample.nobs = 112, 
                                     sample.mean = m)
 
 # This is the model. Let's have a look at the results:
-
 summary(mjob1, fit.measures = TRUE, modindices = TRUE)
 
-# First fit: model chi-sq is just rejected at the 0.05 level.
-# CFI is not very high, RMSEA and SRMR are high, too though
-# close-fit hypothesis cannot be rejected (p = 0.148). To me,
-# fit can be improved. I also asked modindices to be printed.
-# Let's look at those indices. Two of them are particularly
-# high: TS  ~ PERFORMM and TS =~ PERFORMM. In the original 
-# model, we predicted an effect of self-esteem on performance.
-# The modification indices suggests that performance may also
-# affect self-esteem. This sounds theoretically reasonable too.
-# Self-esteem and performance may simultaneously affect each
-# other. So, I'll add this to the model. Adding this path
-# will make the model non-recursive because there will be a 
-# feedback loop between TS and PERFORMM. And also, once we
-# add this feedback loop, I think it makes sense to also add
-# a  covariance between the residuals of TS and PERFORMM. This
-# is because when two variables affect each other simultaneously,
-# there may be other factors that effect both. This other 
-# factors are captured by the error covariance. I'll thus also
-# add the error cov. Note that this model will not be identified
-# as such. So, for identification, I'll constrain the effect of 
-# TS on PERFORMM to be the same as the effect of PERFORMM on
-# TS. Do not forget to add TS ~~ AM in the model once you add
-# TS ~ PERFORMM. Otherwise, lavaan will force TS ~~ AM to be
-# zero. The modified model will look like below:
+# First fit: model chi-sq cannot be rejected at the 0.05 level.
+# CFI is very high, RMSEA and SRMR are low too. None of the 
+# modification indices are high, so the fit is fine.
 
-mod2 <-'
-#measurement part
-AM  =~ ACHMOT1 + ACHMOT2
-TS  =~   TSSE1 +   TSSE2
-JBS =~JBSATIS1 +JBSATIS2 
-
-#structural part
-JBS      ~ AM +   TS + PERFORMM + VERBINTM
-PERFORMM ~ AM + a*TS            + VERBINTM
-
-#modification
-TS       ~ a*PERFORMM
-TS ~~ PERFORMM
-TS ~~ AM
-'
-
-mjob2 <- sem(mod2, sample.cov = d.job, sample.nobs = 112, 
-             sample.mean = m)
-
-summary(mjob2, fit.measures = TRUE)
-
-# Chi-sq fine, CFI improved. RMSEA and SRMR decreased. The fit
-# is still imperfect (SRMR and the upper 90%CI boundary of 
-# RMSEA is too hight), but better than what we had. We can also
-# compare this with the original specification:
-
-anova(mjob1, mjob2)
-
-# The updated model fits significantly better (at the 0.05) 
-# level. So, I'd retain this updated version. 
+# Now we can interpret the results. Everything increases job
+# satisfaction, but interestingly verbal intelligence and achiev-
+# -ment orientation has negative links with performance. (This is
+# what I will tell to my line manager)
