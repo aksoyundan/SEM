@@ -71,6 +71,33 @@ summary(MR2 <- sem(m2, data=dtr), fit.measures = TRUE,
 # could also not be easily accommodated in a standard multilevel
 # model.
 
+# One could even extract individual trajectories of growth based
+# on the LCM and plot them, let's do that (I am using tidyverse)
+
+library(tidyverse)
+plot_dat <- 
+        lavPredict(MR2) %>% 
+        data.frame() #this predicts individual slopes and intercepts
+plot_dat$city_n <- 
+        1:nrow(plot_dat) #add city id
+
+# plot the whole thing:
+
+ggplot(data=plot_dat) +
+        scale_x_continuous(
+                name = "Timepoint",
+                limits=c(0, 3),
+                breaks = c(0, 1, 2, 3, 4),
+                labels = c('2009', '2010', '2011', '2012', '2013')
+        ) +
+        geom_abline(data = plot_dat, mapping = 
+                        aes(slope=SMR, 
+                            intercept=IMR, 
+                            color = city_n), alpha = 0.2) +
+        scale_y_continuous(name = "Marriage rates", limits=c(22,46)) + 
+        labs(title = 'Predicted trajectories of marriage')  +
+        theme(legend.position = 'none')
+
 # Let's include time constant and time varying predictors. I'll
 # constrain the effect of unemployment on marriage to be the same.
 # I don't see why this effect should vary over time.
