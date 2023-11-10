@@ -7,8 +7,10 @@
 # A
 #################################################################
 
+# You'd need the read.dta function in foreign package to read in
+# stata files. 
 
-dtr <- foreign::read.dta("C:\\Users\\aksoy\\Dropbox\\Data_Misc\\NCRM-SEM-course\\Data\\tr.dta")
+dtr <- foreign::read.dta("C:\\Users\\...tr.dta") #adjust filepath
 plot(c(2009:2013), c(mean(dtr$MR1), mean(dtr$MR2), mean(dtr$MR3), 
                      mean(dtr$MR4), mean(dtr$MR5)), xlab = "Year",
                      ylab = "Marriage Rate (per 1000)") 
@@ -270,7 +272,9 @@ summary(MR2e <- sem(m2e, data=dtr), standardized = TRUE,
 # Stata format with value labels, so it is better to use the 
 # option convert.factors = FALSE in read.dta() command. 
 
-dbhps <- foreign::read.dta("C:\\Users\\aksoy\\Dropbox\\Data_Misc\\NCRM-SEM-course\\Data\\bhps.dta", convert.factors = FALSE)
+# adjust file path
+dbhps <- foreign::read.dta("C:\\Users\\...\\bhps.dta", 
+                          convert.factors = FALSE)
 
 #################################################################
 # A
