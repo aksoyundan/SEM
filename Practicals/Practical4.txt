@@ -1,0 +1,168 @@
+################################################################
+############## Computer Practical 4 ############################
+############### Longitudinal data  #############################
+########################################## 09Nov2023, Ozan Aksoy
+
+#################################################################
+# 1
+#################################################################
+
+The dataset tr.dta includes Marriage Rates (number of marriages
+happened in a year per 1000 16-49 year old adults) and 
+unemployment rates between 2009 and 2013 accross the 81 
+provinces of Turkey. The dataset also includes a binary variable
+<prov_AKP> which indicates whether the AK Parti (Justice and 
+Development Party) of Mr. Erdogan has won the province in the 
+2004 local elections. The details of the variables are below.   
+
+-----------------------------------------------------------
+              storage   display    value
+variable name   type    format     label
+-----------------------------------------------------------
+Il              str16   %16s       province name           
+ncid            long    %8.0g      province code       
+MR1             float   %9.0g      Marriage rate in 2009
+MR2             float   %9.0g      Marriage rate in 2010
+MR3             float   %9.0g      Marriage rate in 2011
+MR4             float   %9.0g      Marriage rate in 2012
+MR5             float   %9.0g      Marriage rate in 2013
+unemp1          double  %10.0g     Unemployment rate in 2009
+unemp2          double  %10.0g     Unemployment rate in 2009
+unemp3          double  %10.0g     Unemployment rate in 2009
+unemp4          double  %10.0g     Unemployment rate in 2009
+unemp5          double  %10.0g     Unemployment rate in 2009
+prov_AKP        float   %9.0g      Province ruled by the AKP           
+------------------------------------------------------------
+
+
+We are mainly interested in studying the level and change in
+Marriage Rates over time, and whether politics (e.g., an AKP 
+rule) and the economy (measured by unemloyment) affect marriage. 
+
+#################################################################
+# A
+#################################################################
+
+Inspect, plot the means of Marriage Rates over the five years.
+What type of a trend do you see? Do Marriage Rates increase or 
+decrease? If so, does the change look linear?
+
+In this part, fit a linear latent curve (= linear latent growth
+model) model, irrespective of your answer to the descriptive 
+question above. In this model the MR* variables will be the 
+indicators of a latent intercept and a latent growth variable. 
+Do include auto-correlations between the residuals (= errors 
+= disturbances) of the 5 marriage items. 1-year lagged auto-
+correlations are enough. Also constrain those auto-correlations
+to be the same over time (otherwise you may experience 
+convergence issues)
+
+At this stage do not include any predictors for the lanet 
+intercept and slope (= gradient = change) variables.  
+
+Comment on the model fit. Is the fit good? Likely, the model fit 
+will not be good, but ignore this issue for now. 
+
+Interpret the results, particularly the means of latent intercept 
+and slope variables, variances of these two variables, covariance 
+between the two, and any other parameter that you think seems 
+interesting. 
+
+Now predict the latent intercept and the latent slope with 
+prov_AKP. Does AKP affect the intercept and slope in the model?
+Interpret the results. 
+
+Also predict marriage rates using the time-varying predictor, 
+unemployment rate. Do you want to constrain the effect of 
+unemployment on marriage rates to be the same over time? Argue
+why or why not. Interpret the results. 
+
+#################################################################
+# B
+#################################################################
+
+Above in part A, we fitted a linear growth curve model. However,
+the empirical trend seemed non-linear (with some ups and downs in
+change over time). Now we will accomodate this non-linearity. 
+
+Modifiy the model in A. Instead of fitting a linear growth curve,
+estimate the pattern empirically. That is, fix the loading of the 
+latent slope parameter on MR1 and MR2 to 0 and 1 respectively as
+you did above. But allow other loadings of the latent slope 
+parameter to be freely estimated. In your model, allow for auto-
+correlations between the error terms as you did in part A.
+
+Inspect the results. Does the model fit data? Compare this model 
+with the linear model in A. What is the  difference between this 
+model and the one in A? Interpret the results. 
+
+Also perform the same tests you did above: do an AKP rule and 
+unemployment affect marriage rates? 
+
+#################################################################
+# 2
+#################################################################
+
+The dataset bhps.dta includes a selected subset of variables from
+the British Household Longitudinal Survey, which is a panel data
+with many waves. In the current data, we are interested only in
+variable trust and volunteering. Trust is the usual generalised 
+trust measure. This is a binary variable asking whether people can
+be trusted. We will treat it as continuous anyways, so our models
+can be interpreted as "Linear Probability Models". The other
+variable we'll be looking at is volunteering frequency. These 
+variables are thus:
+
+tr1, tr2, tr3, tr4 : trust measured in occassion 1,2,3,4 resp.
+vol1, vol2, vol3, vol4 : volunteering measured in occassion 1,2,3,4 
+resp.
+
+Note that those measurement occasions in fact do not fully overlap
+in the actual data, as the variables are measured sometimes in 
+different waves. So the results we'll get should not be taken 
+literally below.
+
+Note also that the dataset has many missings, so use FIML in your
+estimations (or better compare FIML versus the usual estimation).
+
+#################################################################
+# A
+#################################################################
+
+We are interested in how trust affects volunteering, and 
+volunteering affects trust. Fit a cross-legged panel model as you
+have seen in class whereby a variable affects itself and the other 
+variable in the next wave. Also add disturbance covariances between 
+trust and volunteering in the same wave. Inspect model fit and 
+interpret the results.
+
+#################################################################
+# B
+#################################################################
+
+Now fit a model which has two "fixed-effects" for respondents. One
+for trust, and another for volunteering. So now we can interpret
+the effects of within-person change in one-variable on within-person 
+change in the other variable. 
+We still want to have cross-legged effects as we are interested in
+effects in both ways (tr -> vol and vol -> tr). Inspect model fit
+and interpret the results. 
+
+Argue if the model in A above is nested in the model we fit here in B. 
+If you think they are nested, can you perform an test that compares 
+the two models? What is your conclusion?
+
+#################################################################
+# C
+#################################################################
+
+In B we are interested in both the effect of trust on volunteering,
+and the effect of volunteering on trust. In this exercise, we are
+rather interested in the effect of trust on volunteering only. But
+we still want to account for possible reverse causality from 
+volunteering on trust. Fit a model a la Allison et al. which is a
+cross-legged panel models with fixed effects for individuals for 
+volunteering and that earlier disturbances of volunteering is allowed
+to correlate with the later waves of trust. Inspect model fit and 
+interpret the results. Can you compare the model here with the one
+in B? 
